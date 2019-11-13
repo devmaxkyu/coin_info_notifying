@@ -38,6 +38,11 @@ foreach($emails as $e){
 
     $response = $parser->generate();
 
+    if(empty($response)){
+        $email_reader->delete($e['index']);
+        continue;
+    }
+
     // sending response
 
     $header = $e['header'];
@@ -46,7 +51,7 @@ foreach($emails as $e){
         $fromname = $object->personal;
         $fromaddress = $object->mailbox . "@" . $object->host;
     }
-
+ 
     // Instantiation and passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
@@ -60,12 +65,13 @@ foreach($emails as $e){
         $mail->Password   = $email_config['pass'];                               // SMTP password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
         $mail->Port       = 587;                                    // TCP port to connect to
-
+  
         //Recipients
         $mail->setFrom($email_config['user'], 'onefathom');
         $mail->addAddress($fromaddress);     // Add a recipient
         $mail->addReplyTo($email_config['user'], 'Information');
 
+ 
         // Content
         $mail->isHTML(false);                                  // Set email format to HTML
         $mail->Subject = 'Answer for your question';
@@ -73,10 +79,11 @@ foreach($emails as $e){
         $mail->AltBody = $response;
 
         $mail->send();
+   
         $email_reader->delete($e['index']);
-        echo 'Message has been sent';
-    } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        //echo 'Message has been sent';
+    } catch (Exception $ex) {
+        //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 }
 

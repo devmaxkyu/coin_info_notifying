@@ -116,14 +116,14 @@ class Email_reader {
             $body = imap_body($this->conn, $i);
             $structure = imap_fetchstructure($this->conn, $i);
 
-            //if($headers->Deleted != 'D'){
+            if($headers->Deleted != 'D'){
                 $in[] = array(
                     'index'     => $i,
                     'header'    => $headers,
                     'body'      => $body,
                     'structure' => $structure
                 );
-            //}
+            }
         }
 
         $this->inbox = $in;

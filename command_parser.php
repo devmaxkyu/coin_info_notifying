@@ -79,7 +79,6 @@ define("PERCENT_CHANGE", "% change");
     function makeNumberFormat($num){
        
         $cnt = strlen((string)explode('.', $num)[0]);
-        echo (string)explode($num, '.')[0].'-';
         if($cnt > 11){
            
             // billion
@@ -127,7 +126,7 @@ define("PERCENT_CHANGE", "% change");
                 if(in_array(PERCENT_CHANGE, $this->extracted_cmds)){
                     $line .= ' (24HR/%) '. number_format($coin->quote->USD->percent_change_24h, 1).'%';
                 }
-                $this->response_text .= $line.'\n';
+                $this->response_text .= $line.'<br>';
             }
         }
 
@@ -150,12 +149,12 @@ define("PERCENT_CHANGE", "% change");
         while($i < $limit + 1){
             $coin = $this->currency_list->data[$i-1];
             $line = $i.'. '. $coin->symbol;
-            $line .= ' (MC) $'. $coin->quote->USD->market_cap;
+            $line .= ' (MC) $'. $this->makeNumberFormat($coin->quote->USD->market_cap);
             $line .= ' (P) $'. number_format($coin->quote->USD->price, 2);
-            $line .= ' (24HR/Vol) $'. $coin->quote->USD->volume_24h;
-            $line .= ' (CS) '.$coin->symbol.' '.$coin->circulating_supply;
-            $line .= ' (24HR/%) '. $coin->quote->USD->percent_change_24h;
-            $this->response_text .= $line.'\n';
+            $line .= ' (24HR/Vol) $'. $this->makeNumberFormat($coin->quote->USD->volume_24h);
+            $line .= ' (CS) '.$coin->symbol.' '. $this->makeNumberFormat($coin->circulating_supply);
+            $line .= ' (24HR/%) '. number_format($coin->quote->USD->percent_change_24h, 1).'%';
+            $this->response_text .= $line.'<br>';
             $i++;
         }
     }
