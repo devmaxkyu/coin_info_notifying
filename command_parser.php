@@ -95,8 +95,9 @@ define("PERCENT_CHANGE", "% change");
     }
 
     function generate(){
+        $d = new DateTime();
 
-        $this->response_text = '';
+        $this->response_text = (string)$d->format('Y-m-d \@ H:i:s').'<br>------------------------------<br>';
         // generate response data
         foreach($this->currency_list->data as $coin){
             if($this->has_symbol($coin->symbol)){
