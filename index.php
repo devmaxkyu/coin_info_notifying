@@ -13,13 +13,13 @@ use PHPMailer\PHPMailer\SMTP;
 
 //===============CONFIG SECTION===================          
 $email_config = array(                           
-	'server' => 'mail.onefathom.com',            
-	'user' => 'zemin@onefathom.com',
-	'pass' => 'MNCNm;$W-v{[',
+	'server' => '',            
+	'user' => '',
+	'pass' => '',
 	'port' => 143
 );
 
-$api_key = 'ba5abd61-6329-4ecc-9190-3174d463c041';
+$api_key = '';
 //=================================================
 
 //reading email      
